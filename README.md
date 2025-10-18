@@ -15,10 +15,9 @@ FxSound is a digital audio program built for Windows PC's. The background proces
 * Download and install the [latest version of FxSound](https://download.fxsound.com/fxsoundlatest)
 * Install [Visual Studio 2022](https://visualstudio.microsoft.com/vs)
 * Install [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk)
-* Install [JUCE framework version 6.1.6](https://github.com/juce-framework/JUCE/releases/tag/6.1.6)
-  
+* Install [JUCE framework](https://api.juce.com/api/v1/download/juce/latest/windows)
+
 FxSound application requires FxSound Audio Enhancer virtual audio driver. So, to run FxSound application built from source, we need to install FxSound which installs the audio driver.
-While building with JUCE 7.x.x version we ran into an issue that the application CPU utilisation goes high when the display is off. So, we are building FxSound with JUCE 6.1.6.
 
 ### Build FxSound from Visual Studio
 * Open [fxsound/Project/FxSound.sln](https://github.com/fxsound2/fxsound-app/blob/main/fxsound/Project/FxSound.sln) in Visual Studio
@@ -33,8 +32,7 @@ FxSound application has three components.
 Due to the some limitations with Projucer, after exporting the Visual Studio solution from Projucer, few changes have to be made in the solution to build FxSound.
 1. Since the audiopassthru and DfxDsp dependency projects cannot be added to the solution when FxSound.sln is exported, open fxsound/Project/FxSound.sln in Visual Studio and add the existing projects audiopassthru/audiopassthru.vcxproj, dsp/DfxDsp.vcxproj.
 2. From FxSound_App project, add reference to audiopassthru and DfxDsp.
-3. By default, only the x64 platform configuration is created in the exported FxSound_App project. To build 32 bit, add a 32 bit Win32 configuration from the Visual Studio Configuration Manager as a new platform, then choose x64 in the "Copy settings from:" option.
-4. If you run FxSound from Visual Studio, to let the application to use the presets, set the Working Directory to ```$(SolutionDir)..\..\bin\$(PlatformTarget)``` in FxSound_App Project->Properties->Debugging setting.
+3. If you run FxSound from Visual Studio, to let the application to use the presets, set the Working Directory to ```$(SolutionDir)..\..\bin\$(PlatformTarget)``` in FxSound_App Project->Properties->Debugging setting.
 
 ## How to contribute
 We welcome anyone who wants to contribute to this project. For more details on how to contribute, follow [this contributing guideline](./CONTRIBUTING.md).
@@ -44,5 +42,9 @@ Our special thanks to Advanced Installer for supporting us with Advanced Install
 
 [![image](https://github.com/user-attachments/assets/c133fe06-619c-4c17-bce9-f1cf051c5265)](https://www.advancedinstaller.com)
 
+This project uses the [JUCE](https://juce.com) framework, which is licensed under [AGPL v3.0](https://github.com/juce-framework/JUCE/blob/master/LICENSE.md).
+
+Thanks to [Theremino](https://www.theremino.com) for the valuable contributions they do through major feature enhancements in FxSound.
+
 ## License
-[GPL v3.0](https://github.com/fxsound2/fxsound-app/blob/main/LICENSE)
+[AGPL v3.0](https://github.com/fxsound2/fxsound-app/blob/main/LICENSE)

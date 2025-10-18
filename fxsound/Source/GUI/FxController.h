@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -64,6 +64,7 @@ public:
     bool isMainWindowVisible();
 	void setMenuClicked(bool clicked);
 	FxWindow* getMainWindow();
+	Point<int> getSystemTrayWindowPosition(int width, int height);
 	bool exit();
 
 	void setPowerState(bool power_state);
@@ -82,7 +83,11 @@ public:
 
 	float getEffectValue(FxEffects::EffectType effect);
 	void setEffectValue(FxEffects::EffectType effect, float value);
-
+	bool isVolumeNormalizationEnbabled() const;
+	void setVolumeNormalizationEnabled(bool enabled);
+	float getVolumeNormalization() const;
+	void setVolumeNormalization(float target_rms);
+	float checkRMSValue(float target_rms);
     bool isAudioProcessing();
 	int getNumEqBands();
 	float getEqBandFrequency(int band_num);
@@ -208,7 +213,9 @@ private:
 	std::vector<SoundDevice> output_devices_;
     bool hide_help_tooltips_;
 	bool hide_notifications_;
-    
+	bool volume_normalization_enabled_;
+	float volume_normalization_rms_;
+
 	unsigned long audio_process_time_;
 	int audio_process_on_counter_;
 	int audio_process_off_counter_;

@@ -17,6 +17,15 @@ namespace BinaryData
     extern const char*   GilroySemibold_ttf;
     const int            GilroySemibold_ttfSize = 83948;
 
+    extern const char*   donate_svg;
+    const int            donate_svgSize = 431;
+
+    extern const char*   donate_hover_svg;
+    const int            donate_hover_svgSize = 431;
+
+    extern const char*   speaker_svg;
+    const int            speaker_svgSize = 874;
+
     extern const char*   min_window_svg;
     const int            min_window_svgSize = 542;
 
@@ -108,82 +117,85 @@ namespace BinaryData
     const int            Slider_Thumb_bw_svgSize = 4109;
 
     extern const char*   FxSound_ar_txt;
-    const int            FxSound_ar_txtSize = 13349;
+    const int            FxSound_ar_txtSize = 13906;
 
     extern const char*   FxSound_ba_txt;
-    const int            FxSound_ba_txtSize = 10299;
+    const int            FxSound_ba_txtSize = 10578;
 
     extern const char*   FxSound_de_txt;
-    const int            FxSound_de_txtSize = 11433;
+    const int            FxSound_de_txtSize = 11766;
 
     extern const char*   FxSound_es_txt;
-    const int            FxSound_es_txtSize = 10994;
+    const int            FxSound_es_txtSize = 11255;
 
     extern const char*   FxSound_fr_txt;
-    const int            FxSound_fr_txtSize = 11270;
+    const int            FxSound_fr_txtSize = 11603;
 
     extern const char*   FxSound_hr_txt;
-    const int            FxSound_hr_txtSize = 10160;
+    const int            FxSound_hr_txtSize = 10433;
 
     extern const char*   fxsound_hu_txt;
-    const int            fxsound_hu_txtSize = 11610;
+    const int            fxsound_hu_txtSize = 11929;
 
     extern const char*   FxSound_id_txt;
-    const int            FxSound_id_txtSize = 10636;
+    const int            FxSound_id_txtSize = 10921;
 
     extern const char*   FxSound_ir_txt;
-    const int            FxSound_ir_txtSize = 13146;
+    const int            FxSound_ir_txtSize = 13516;
 
     extern const char*   FxSound_it_txt;
-    const int            FxSound_it_txtSize = 10850;
+    const int            FxSound_it_txtSize = 11138;
 
     extern const char*   FxSound_ja_txt;
-    const int            FxSound_ja_txtSize = 12197;
+    const int            FxSound_ja_txtSize = 12518;
 
     extern const char*   FxSound_ko_txt;
-    const int            FxSound_ko_txtSize = 11255;
+    const int            FxSound_ko_txtSize = 11549;
 
     extern const char*   FxSound_nl_txt;
-    const int            FxSound_nl_txtSize = 10589;
+    const int            FxSound_nl_txtSize = 10856;
 
     extern const char*   FxSound_pl_txt;
-    const int            FxSound_pl_txtSize = 11249;
+    const int            FxSound_pl_txtSize = 11548;
 
     extern const char*   FxSound_ptbr_txt;
-    const int            FxSound_ptbr_txtSize = 10988;
+    const int            FxSound_ptbr_txtSize = 11283;
 
     extern const char*   FxSound_pt_txt;
-    const int            FxSound_pt_txtSize = 10904;
+    const int            FxSound_pt_txtSize = 11159;
 
     extern const char*   FxSound_ro_txt;
-    const int            FxSound_ro_txtSize = 11035;
+    const int            FxSound_ro_txtSize = 11330;
 
     extern const char*   FxSound_ru_txt;
-    const int            FxSound_ru_txtSize = 14718;
+    const int            FxSound_ru_txtSize = 15109;
 
     extern const char*   FxSound_sv_txt;
-    const int            FxSound_sv_txtSize = 10685;
+    const int            FxSound_sv_txtSize = 10975;
 
     extern const char*   FxSound_th_txt;
-    const int            FxSound_th_txtSize = 17640;
+    const int            FxSound_th_txtSize = 18171;
 
     extern const char*   FxSound_tr_txt;
-    const int            FxSound_tr_txtSize = 10802;
+    const int            FxSound_tr_txtSize = 11088;
 
     extern const char*   FxSound_txt;
-    const int            FxSound_txtSize = 10000;
+    const int            FxSound_txtSize = 10259;
+
+    extern const char*   FxSound_ua_txt;
+    const int            FxSound_ua_txtSize = 14740;
 
     extern const char*   FxSound_vi_txt;
-    const int            FxSound_vi_txtSize = 11832;
+    const int            FxSound_vi_txtSize = 12174;
 
     extern const char*   FxSound_zhCN_txt;
-    const int            FxSound_zhCN_txtSize = 9422;
+    const int            FxSound_zhCN_txtSize = 9679;
 
     extern const char*   FxSound_zhTW_txt;
-    const int            FxSound_zhTW_txtSize = 9576;
+    const int            FxSound_zhTW_txtSize = 9836;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 58;
+    const int namedResourceListSize = 62;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

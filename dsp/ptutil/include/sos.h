@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #ifndef _SOS_H_
@@ -46,6 +46,7 @@ int PT_DECLSPEC sosSetSectionResponseFlag(PT_HANDLE *, int, int);
 int PT_DECLSPEC sosZeroStateAllSections(PT_HANDLE *);
 int PT_DECLSPEC sosSetAppHasHyperBassMode(PT_HANDLE *, bool);
 int PT_DECLSPEC sosSetDisableBand1Flag(PT_HANDLE *, bool);
+int PT_DECLSPEC sosSetVolumeNormalization(PT_HANDLE*, realtype);
 
 /* sosGet.cpp */
 int PT_DECLSPEC sosGetMasterGain(PT_HANDLE *hp_sos, realtype *);

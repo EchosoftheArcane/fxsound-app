@@ -1,3 +1,21 @@
+/*
+FxSound
+Copyright (C) 2025  FxSound LLC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "fxdiag.h"
 #include "AudioDevice.h"
 
@@ -20,6 +38,13 @@ void AudioDevice::initProperties(IMMDevice* pDevice)
 	IPropertyStore* pPropStore = NULL;
 	PROPVARIANT propName;
 	PROPVARIANT propFormFactor;
+
+	LPWSTR id = NULL;
+	if (SUCCEEDED(pDevice->GetId(&id)))
+	{
+		deviceId_ = id;
+		CoTaskMemFree(id);
+	}
 
 	PropVariantInit(&propName);
 	PropVariantInit(&propFormFactor);
@@ -167,7 +192,7 @@ void ReportAudioDevices(const std::vector<AudioDevice>& audioDevices)
 	int i = 1;
 	for (auto audioDevice : audioDevices)
 	{
-		std::wcout << ColorFormat(audioDevice.deviceState_ == DeviceState::Active ?  51 : 245) << i << L". " << audioDevice.deviceName_ << L" [" << audioDevice.deviceType_ << "]" << std::endl;
+		std::wcout << ColorFormat(audioDevice.deviceState_ == DeviceState::Active ?  51 : 245) << i << L". " << audioDevice.deviceName_ << L" [" << audioDevice.deviceType_ << "]" << L" " << audioDevice.deviceId_ << std::endl;
 		switch (audioDevice.deviceState_)
 		{
 			case DeviceState::Active:

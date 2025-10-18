@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -189,6 +189,21 @@ int dfxpEqInitBand1SpecialCase(PT_HANDLE *hp_dfxp)
 	r_band1_value = (realtype)f_bass_boost_value * (realtype)10.0;
 
 	if (dfxpEqSetBandBoostCut(hp_dfxp, DFXP_STORAGE_TYPE_ALL, 1, r_band1_value) != OKAY)
+		return(NOT_OKAY);
+
+	return(OKAY);
+}
+
+int dfxpEqSetVolumeNormalization(PT_HANDLE* hp_dfxp, realtype r_target_rms)
+{
+	struct dfxpHdlType* cast_handle;
+
+	cast_handle = (struct dfxpHdlType*)(hp_dfxp);
+
+	if (cast_handle == NULL)
+		return(OKAY);
+
+	if (GraphicEqSetVolumeNormalization(cast_handle->eq.graphicEq_hdl, r_target_rms) != OKAY)
 		return(NOT_OKAY);
 
 	return(OKAY);

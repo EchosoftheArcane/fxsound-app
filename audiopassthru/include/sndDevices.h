@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #ifndef _SND_DEVICES_H_
@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* Limit settings */
-#define SND_DEVICES_MAX_NUM_DEVICES 16
+#define SND_DEVICES_MAX_NUM_DEVICES 64
 
 /* Device "friendly name" string, used to identify DFX device. */
 #define SND_DEVICES_DFX_DEVICE_STRING L"FxSound Audio Enhancer"
@@ -340,7 +340,7 @@ struct sndDevicesHdlType {
 	IMMDevice *pCaptureDevice;
 	IMMDevice *pPlaybackDevice;
 
-	LPWSTR pwszID[SND_DEVICES_MAX_NUM_DEVICES]; // For the GUID ID strings for each device, all devices combined.
+	WCHAR pwszID[SND_DEVICES_MAX_NUM_DEVICES][PT_MAX_GENERIC_STRLEN]; // For the GUID ID strings for each device, all devices combined.
 	LPWSTR pwszIDRealDevices[SND_DEVICES_MAX_NUM_DEVICES]; // For the GUID ID strings for each real playback device.
 	WCHAR pwszIDPreviousRealDevices[SND_DEVICES_MAX_NUM_DEVICES][PT_MAX_GENERIC_STRLEN]; // To detect when a new devices is added.
 

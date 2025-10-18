@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -22,50 +22,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "FxSettingsDialog.h"
 #include "FxPresetExportDialog.h"
 #include "FxPresetImportDialog.h"
+#include "FxPresetNameEditor.h"
 
-class PresetNameInputFilter : public juce::TextEditor::InputFilter
-{
-public:
-	PresetNameInputFilter()
-	{
-		// Define a list of reserved characters
-		reservedChars.add('<');
-		reservedChars.add('>');
-		reservedChars.add(':');
-		reservedChars.add('"');
-		reservedChars.add('/');
-		reservedChars.add('\\');
-		reservedChars.add('|');
-		reservedChars.add('?');
-		reservedChars.add('*');
-	}
-
-	juce::String filterNewText(juce::TextEditor& textEditor, const juce::String& newText) override
-	{
-		// Iterate through the new text and remove any reserved characters
-		juce::String filteredText;
-		for (int i = 0; i < newText.length(); ++i)
-		{
-			juce_wchar character = newText[i];
-			if (!reservedChars.contains(character))
-			{
-				filteredText += character;
-			}
-		}
-		return filteredText;
-	}
-
-private:
-	juce::Array<juce::juce_wchar> reservedChars;
-};
-
-class FxPresetNameEditor : public PopupMenu::CustomComponent, private TextEditor::Listener
+class FxPresetMenuItem : public PopupMenu::CustomComponent, private TextEditor::Listener
 {
 public:
 	enum class Status { Empty = 0, Valid, Invalid };
 	enum class Action { Save = 1, Rename };
 
-	FxPresetNameEditor(Action action) : PopupMenu::CustomComponent(false)
+	FxPresetMenuItem(Action action) : PopupMenu::CustomComponent(false)
 	{
 		auto& theme = dynamic_cast<FxTheme&>(getLookAndFeel());
 
@@ -116,7 +81,7 @@ public:
 			}
 		};
 	}
-	~FxPresetNameEditor() = default;
+	~FxPresetMenuItem() = default;
 
 	Status getStatus() { return preset_status_; }
 	String getPresetName() { return preset_name_; }
@@ -207,11 +172,11 @@ private:
 	Status preset_status_;
 	String preset_name_;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxPresetNameEditor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FxPresetMenuItem)
 };
 
 //==============================================================================
-FxMainWindow::FxMainWindow() : power_button_(L"powerButton"), menu_button_(L"menuButton", DrawableButton::ButtonStyle::ImageFitted), resize_button_(L"resizeButton", DrawableButton::ButtonStyle::ImageFitted), donate_button_(TRANS("Donate")), minimize_button_(L"minimizeButton", DrawableButton::ButtonStyle::ImageFitted)
+FxMainWindow::FxMainWindow() : power_button_(L"powerButton"), menu_button_(L"menuButton", DrawableButton::ButtonStyle::ImageFitted), resize_button_(L"resizeButton", DrawableButton::ButtonStyle::ImageFitted), donate_button_(L"donateButton", DrawableButton::ButtonStyle::ImageFitted), minimize_button_(L"minimizeButton", DrawableButton::ButtonStyle::ImageFitted)
 {
 	setName("FxSound");
 	setOpaque(false);
@@ -246,9 +211,15 @@ FxMainWindow::FxMainWindow() : power_button_(L"powerButton"), menu_button_(L"men
 	resize_button_.addListener(this);
 
 	auto& theme = dynamic_cast<FxTheme&>(LookAndFeel::getDefaultLookAndFeel());
+
 	donate_button_.setMouseCursor(MouseCursor::PointingHandCursor);
-	donate_button_.setName(L"Donate");
-	donate_button_.setSize(DONATE_BUTTON_WIDTH, DONATE_BUTTON_HEIGHT);
+	donate_button_.setSize(BUTTON_WIDTH + 2, BUTTON_WIDTH + 6);
+	donate_button_.setHelpText(TRANS("Donate"));
+	donate_button_.setTooltip(TRANS("Donate"));
+	donate_image_ = Drawable::createFromImageData(BinaryData::donate_svg, BinaryData::donate_svgSize);
+	donate_hover_image_ = Drawable::createFromImageData(BinaryData::donate_hover_svg, BinaryData::donate_hover_svgSize);
+	donate_button_.setImages(donate_image_.get(), donate_hover_image_.get());
+	donate_button_.setWantsKeyboardFocus(true);
 	donate_button_.onClick = [this]() {
 		URL url("https://www.paypal.com/donate/?hosted_button_id=JVNQGYXCQ2GPG");
 		url.launchInDefaultBrowser();
@@ -306,6 +277,12 @@ void FxMainWindow::showLiteView()
 {
 	setContent(&lite_view_);
     setResizeImage();
+	setAlwaysOnTop(true);
+
+	auto bounds = getBounds();
+	auto pos = FxController::getInstance().getSystemTrayWindowPosition(bounds.getWidth(), bounds.getHeight());
+	bounds.setPosition(pos);
+	setBounds(bounds);
 }
 
 void FxMainWindow::showProView()
@@ -313,6 +290,32 @@ void FxMainWindow::showProView()
     pro_view_.update();
 	setContent(&pro_view_);
     setResizeImage();
+	setAlwaysOnTop(false);
+
+	auto display = Desktop::getInstance().getDisplays().getPrimaryDisplay();
+	if (display != nullptr)
+	{
+		auto bounds = getBounds();
+		if (display->userArea.getX() > bounds.getX())
+		{
+			bounds.setX(display->userArea.getX() + 10);
+		}
+		else if (display->userArea.getRight() < bounds.getRight())
+		{
+			bounds.setX(display->userArea.getRight() - bounds.getWidth() - 10);
+		}
+
+		if (display->userArea.getY() > bounds.getY())
+		{
+			bounds.setY(display->userArea.getY() + 10);
+		}
+		else if (display->userArea.getBottom() < bounds.getBottom())
+		{
+			bounds.setY(display->userArea.getBottom() - bounds.getHeight() - 10);
+		}
+
+		setBounds(bounds);
+	}
 }
 
 void FxMainWindow::updateView()
@@ -453,8 +456,8 @@ void FxMainWindow::showMenu()
 	PopupMenu save_menu;
 	PopupMenu rename_menu;
 
-	save_menu.addCustomItem(1, std::make_unique<FxPresetNameEditor>(FxPresetNameEditor::Action::Save), nullptr);
-	rename_menu.addCustomItem(2, std::make_unique<FxPresetNameEditor>(FxPresetNameEditor::Action::Rename), nullptr);
+	save_menu.addCustomItem(1, std::make_unique<FxPresetMenuItem>(FxPresetMenuItem::Action::Save), nullptr);
+	rename_menu.addCustomItem(2, std::make_unique<FxPresetMenuItem>(FxPresetMenuItem::Action::Rename), nullptr);
 
 	popup_menu.addItem(TRANS("Settings"), settingsClicked);
 	popup_menu.addSeparator();

@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <stdlib.h>
@@ -293,6 +293,21 @@ int PT_DECLSPEC GraphicEqSetAppHasHyperBassMode(PT_HANDLE *hp_GraphicEq, bool b_
 		return(NOT_OKAY);
 
 	cast_handle->app_has_hyperbass = b_app_has_hyperbass;
+
+	return(OKAY);
+}
+
+int PT_DECLSPEC GraphicEqSetVolumeNormalization(PT_HANDLE *hp_GraphicEq, realtype r_target_rms)
+{
+	struct GraphicEqHdlType* cast_handle;
+
+	cast_handle = (struct GraphicEqHdlType*)(hp_GraphicEq);
+
+	if (cast_handle == NULL)
+		return(NOT_OKAY);
+
+	if (sosSetVolumeNormalization((PT_HANDLE*)(cast_handle->sos_hdl), r_target_rms) != OKAY)
+		return(NOT_OKAY);
 
 	return(OKAY);
 }

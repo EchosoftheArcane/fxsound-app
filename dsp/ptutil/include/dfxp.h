@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #ifndef _DFXP_H_
@@ -35,6 +35,7 @@ int dfxpEqGetBandBoostCut_FromProcessing(PT_HANDLE *, int, realtype *, wchar_t *
 int dfxpEqGetBandBoostCut_FromRegistry(PT_HANDLE *, int, realtype *, wchar_t *);
 int dfxpEqGetGraphicEqHdl(PT_HANDLE *, PT_HANDLE **);
 int dfxpEqInitBand1SpecialCase(PT_HANDLE *);
+int dfxpEqSetVolumeNormalization(PT_HANDLE *, realtype);
 
 /* dfxpGet */
 int dfxpGetKnobValue(PT_HANDLE *, int, float *);

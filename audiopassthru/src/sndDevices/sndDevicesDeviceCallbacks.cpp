@@ -1,18 +1,18 @@
 /*
 FxSound
-Copyright (C) 2023  FxSound LLC
+Copyright (C) 2025  FxSound LLC
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
+it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "codedefs.h"
@@ -120,7 +120,7 @@ HRESULT STDMETHODCALLTYPE CsndDevicesMMNotificationClient::OnDefaultDeviceChange
 	  SLOUT_FIRST_LINE(L"CsndDevicesMMNotificationClient::OnDefaultDeviceChanged() setting processing thread kill flag");
 
 	  // Don't think we need to kill process thread if DFX itself is selected as default from within our code
-	  if ( cast_handle->pwszID[cast_handle->dfxDeviceNum] != NULL && wcscmp(pwstrDeviceId, cast_handle->pwszID[cast_handle->dfxDeviceNum]) == 0)
+	  if (wcscmp(pwstrDeviceId, cast_handle->pwszID[cast_handle->dfxDeviceNum]) == 0)
 		  return(S_OK);
 
 	  //std::wstring temp_string(pwstrDeviceId);
